@@ -21,6 +21,8 @@ class GenStack
     bool isFull();
     bool isEmpty();
 
+    int getSize();
+
     int size;
     int top;
 
@@ -40,7 +42,7 @@ GenStack<anyType>::GenStack()
 template <class anyType>
 GenStack<anyType>::GenStack(int maxSize)
 {
-  myArray = new anytype[maxSize];
+  myArray = new anyType[maxSize];
   size = maxSize;
   top = -1;
 }
@@ -49,7 +51,6 @@ template <class anyType>
 GenStack<anyType>::~GenStack()
 {
   delete myArray;
-  cout << "Stack destroyed" << endl;
 }
 
 //auxiliary functions=================================================================
@@ -58,7 +59,7 @@ void GenStack<anyType>::push(anyType x)
 {
   if(GenStack<anyType>::isFull())
   {
-    cerr << "Unable to push. Stack is full." << endl;
+    throw 2; //unable to push error
   }
 
   else
@@ -72,12 +73,12 @@ anyType GenStack<anyType>::pop()
 {
   if(GenStack<anyType>::isEmpty())
   {
-    cerr << "Unable to pop. Stack is empty." << endl;
+    throw 1; //unable to pop error
   }
 
   else
   {
-    return myArray[top--]
+    return myArray[top--];
   }
 }
 
@@ -86,7 +87,7 @@ anyType GenStack<anyType>::peek()
 {
   if(GenStack<anyType>::isEmpty())
   {
-    cerr << "Nothing to peek. Stack is empty." << endl;
+    throw 3; //unable to peek error
   }
 
   else
@@ -102,9 +103,15 @@ bool GenStack<anyType>::isFull()
 }
 
 template <class anyType>
-bool GenStack<anyType>isEmpty()
+bool GenStack<anyType>::isEmpty()
 {
   return (top == -1);
+}
+
+template <class anyType>
+int GenStack<anyType>::getSize()
+{
+  return size;
 }
 
 
