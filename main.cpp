@@ -38,7 +38,7 @@ int main(int argc, char* argv[]) // take in two arguments
           }
           catch(int e)
           {
-            cout << "Error Number: " << e << endl;
+            cout << "\nError Number: " << e << endl;
             cout << "Line: " << count << " Found '}'. Expected '{' before." << endl;
             error++;
           }
@@ -56,7 +56,7 @@ int main(int argc, char* argv[]) // take in two arguments
           }
           catch(int e)
           {
-            cout << "Error Number: " << e << endl;
+            cout << "\nError Number: " << e << endl;
             cout << "Line: " << count << " Found ')'. Expected '(' before." << endl;
             error++;
           }
@@ -74,7 +74,7 @@ int main(int argc, char* argv[]) // take in two arguments
           }
           catch(int e)
           {
-            cout << "Error Number: " << e << endl;
+            cout << "\nError Number: " << e << endl;
             cout << "Line: " << count << " Found ']'. Expected '[' before." << endl;
             error++;
           }
@@ -88,9 +88,14 @@ int main(int argc, char* argv[]) // take in two arguments
       while(!checkCurly.isEmpty())
       {
         countCurly++;
+
+        char peek;
+        peek = checkCurly.peek();
+        cout << peek << endl;
+
         checkCurly.pop();
       }
-      cout << "Reached end of file. Missing " << countCurly << " '}'" << endl;
+      cout << "\nReached end of file. Missing " << countCurly << " '}'" << endl;
       break;
     }
 
@@ -102,7 +107,7 @@ int main(int argc, char* argv[]) // take in two arguments
         countBracket++;
         checkBracket.pop();
       }
-      cout << "Reached end of file. Missing " << countBracket << " ']'" << endl;
+      cout << "\nReached end of file. Missing " << countBracket << " ']'" << endl;
       break;
     }
 
@@ -114,20 +119,21 @@ int main(int argc, char* argv[]) // take in two arguments
         countParenthesis++;
         checkParenthesis.pop();
       }
-      cout << "Reached end of file. Missing " << countParenthesis << " ')'" << endl;
+      cout << "\nReached end of file. Missing " << countParenthesis << " ')'" << endl;
       break;
     }
 
     else if( error == 0)
     {
-      cout << "No delimiter errors." << endl;
-      cout << "\nRun another file 'y' or 'n'?: ";
+      cout << "\nNo delimiter errors." << endl;
+      cout << "\n\nRun another file 'y' or 'n'?: ";
       cin >> ans;
     }
 
+
   } while(ans == 'y');
 
-  cout << "Program end." << endl;
+  cout << "\nProgram end." << endl;
 
   return 0;
 }

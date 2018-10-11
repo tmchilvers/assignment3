@@ -15,6 +15,7 @@ class GenStack
     ~GenStack();
 
     void push(anyType);
+    void increaseSize();
     anyType pop();
     anyType peek();
 
@@ -22,7 +23,9 @@ class GenStack
     bool isEmpty();
 
     int getSize();
+    int getTop();
 
+  private:
     int size;
     int top;
 
@@ -59,12 +62,35 @@ void GenStack<anyType>::push(anyType x)
 {
   if(GenStack<anyType>::isFull())
   {
-    throw 2; //unable to push error
+    this->GenStack<anyType>::increaseSize();
+    myArray[++top] = x;
   }
 
   else
   {
     myArray[++top] = x;
+  }
+}
+
+template <class anyType>
+void GenStack<anyType>::increaseSize()
+{
+  int tempSize = size * 2;
+
+  GenStack<anyType> newStack(tempSize);
+
+  while(!this->isEmpty())
+  {
+    newStack.push(this->pop());
+  }
+
+  size = tempSize;
+  delete myArray;
+  myArray = new anyType[size];
+
+  while(!newStack.isEmpty())
+  {
+    this->push(newStack.pop());
   }
 }
 
@@ -87,7 +113,7 @@ anyType GenStack<anyType>::peek()
 {
   if(GenStack<anyType>::isEmpty())
   {
-    throw 3; //unable to peek error
+    throw 2; //unable to peek error
   }
 
   else
@@ -114,5 +140,10 @@ int GenStack<anyType>::getSize()
   return size;
 }
 
+template <class anyType>
+int GenStack<anyType>::getTop()
+{
+  return top;
+}
 
 #endif
