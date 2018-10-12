@@ -38,7 +38,7 @@ int main(int argc, char* argv[]) // take in two arguments. Second one must be fi
     int error = 0; //count number of errors
     string line; //the line being read in file
     int count = 0; //count for which line of the file is being read.
-    bool comment = false;
+    int countChar = 0; //count number of char until next double quote is found
 
     while(getline(myFile, line))
     {
@@ -48,6 +48,21 @@ int main(int argc, char* argv[]) // take in two arguments. Second one must be fi
         if(line[i] == '/' && line[i+1] == '/') //if a line comment is read, ignore what is after
         {
           break;
+        }
+
+        if(line[i] == '"') //ignore when checking within a string
+        {
+          for(int j = i; j < line.size(); j++)
+          {
+            if(line[j] == '"')
+            {
+              break;
+            }
+            countChar++;
+          }
+
+          i += countChar;
+          continue;
         }
 
 ////////////////////////////////////////////////////////////////////////////////
