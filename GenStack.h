@@ -5,17 +5,23 @@
 
 using namespace std;
 
+
+//This is a generic Stack (of array) class that can be of any type. Note function:
+//When the stack is full, the size will increase to twice the original size.
+//For error check: Catch int '1' and '2', for pop error and peek error, respectfully.
+//Implement the catch in class that makes use of GenStack
 //template class======================================================================
 template <class anyType>
 class GenStack
 {
   public:
-    GenStack();
+    //constuctors
+    GenStack(); //the default size is 10
     GenStack(int maxSize);
     ~GenStack();
 
     void push(anyType);
-    void increaseSize();
+    void increaseSize(); //increase to twice the size
     anyType pop();
     anyType peek();
 
@@ -37,15 +43,15 @@ class GenStack
 template <class anyType>
 GenStack<anyType>::GenStack()
 {
-  myArray = new anyType[10];
+  myArray = new anyType[10]; //set new array to size of 10
   size = 10;
-  top = -1;
+  top = -1; //set top to -1 since there is no content yet for it to be top of.
 }
 
 template <class anyType>
 GenStack<anyType>::GenStack(int maxSize)
 {
-  myArray = new anyType[maxSize];
+  myArray = new anyType[maxSize]; //set new array to inputted size
   size = maxSize;
   top = -1;
 }
@@ -53,7 +59,7 @@ GenStack<anyType>::GenStack(int maxSize)
 template <class anyType>
 GenStack<anyType>::~GenStack()
 {
-  delete myArray;
+  delete myArray; //garbage collector
 }
 
 //auxiliary functions=================================================================
@@ -62,8 +68,8 @@ void GenStack<anyType>::push(anyType x)
 {
   if(GenStack<anyType>::isFull())
   {
-    this->GenStack<anyType>::increaseSize();
-    myArray[++top] = x;
+    this->GenStack<anyType>::increaseSize(); //call increase size
+    myArray[++top] = x; //set top to new pushed element
   }
 
   else
@@ -76,22 +82,25 @@ template <class anyType>
 void GenStack<anyType>::increaseSize()
 {
   int tempSize = size * 2;
-
   GenStack<anyType> newStack(tempSize);
+  anyType* newArray = new anyType[tempSize];
 
-  while(!this->isEmpty())
+  for(int i = top; i >= 0; i--)
   {
-    newStack.push(this->pop());
+    newStack.push(myArray[i]);
+    newArray[i] = newStack.peek();
   }
 
-  size = tempSize;
   delete myArray;
   myArray = new anyType[size];
 
-  while(!newStack.isEmpty())
+  for(int i = 0; i < tempSize; i++)
   {
-    this->push(newStack.pop());
+    myArray[i] = newArray[i];
   }
+
+  delete newArray;
+
 }
 
 template <class anyType>
@@ -99,7 +108,7 @@ anyType GenStack<anyType>::pop()
 {
   if(GenStack<anyType>::isEmpty())
   {
-    throw 1; //unable to pop error
+    throw 1; //unable to pop error.
   }
 
   else

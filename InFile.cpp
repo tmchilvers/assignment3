@@ -13,7 +13,21 @@ InFile::InFile()
 
 InFile::InFile(string filePath)
 {
-  inputFile.open(filePath);
+  try
+  {
+    inputFile.open(filePath);
+    if(!inputFile.is_open())
+    {
+     throw invalid_argument("Second argument must be a readable file type and/or exist in directory.\n"); //exception for incorrect file type
+    }
+  }
+
+  catch(const invalid_argument& e) //catch the exceptions here
+  {
+    cerr << e.what() << endl; //this will print out error message
+    cerr << "Fatal error - Program exits\n";
+    exit(1);
+  }
 }
 
 InFile::~InFile()

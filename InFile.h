@@ -15,7 +15,7 @@ class InFile
 {
   public:
     //constructors
-    InFile();
+    InFile(); //will output error stating that constructor must take a file path argument
     InFile(string filePath);
     ~InFile();
 
@@ -23,7 +23,7 @@ class InFile
     void printFile();
     bool checkOpen();
 
-    ifstream& getFile();
+    ifstream& getFile(); //reference allows ability to get the file stream
 
   private:
     ifstream inputFile;
